@@ -1,1 +1,1 @@
-# p_tqdm - progress bars for parallel processing
+# p_tqdm - parallel processing with progress bars
