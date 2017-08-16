@@ -1,0 +1,5 @@
+# Ignore manifest
+MANIFEST
+
+# Ignore dist
+dist
