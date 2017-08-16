@@ -8,7 +8,8 @@ setup(
     author = 'Kyle Swanson',
     author_email = 'swansonk.14@gmail.com',
     url = 'https://github.com/swansonk14/p_tqdm',
-    download_url = 'https://github.com/swansonk14/p_tqdm/archive/0.1.tar.gz',
+    license = 'MIT',
+    install_requires = ['tqdm', 'pathos'],
     keywords = ['tqdm', 'progress bar', 'parallel'],
     classifiers = [],
 )
