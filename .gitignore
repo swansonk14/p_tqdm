@@ -1,5 +1,4 @@
-# Ignore manifest
 MANIFEST
-
-# Ignore dist
 dist
+gifs
+.DS_Store
