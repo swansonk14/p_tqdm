@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name = 'p_tqdm',
     packages = ['p_tqdm'],
-    version = '0.2',
+    version = '1.0',
     description = 'Parallel processing with progress bars',
     author = 'Kyle Swanson',
     author_email = 'swansonk.14@gmail.com',
