@@ -12,7 +12,7 @@ from pathos.helpers import cpu_count
 from pathos.multiprocessing import ProcessingPool as Pool
 from tqdm import tqdm
 
-def p_imap(function, *arrays, num_cpus=None):
+def p_imap(function, *arrays, **kwargs):
     """Returns an iterator for a parallel ordered map with a progress bar.
 
     Args:
@@ -30,6 +30,8 @@ def p_imap(function, *arrays, num_cpus=None):
         parallel in order with a progress bar.
     """
 
+    num_cpus = kwargs.get('num_cpus', None)
+
     if num_cpus is None:
         num_cpus = cpu_count()
     elif type(num_cpus) == float:
@@ -40,7 +42,7 @@ def p_imap(function, *arrays, num_cpus=None):
 
     return iterator
 
-def p_map(function, *arrays, num_cpus=None):
+def p_map(function, *arrays, **kwargs):
     """Performs a parallel ordered map with a progress bar.
 
     Example:
@@ -60,11 +62,13 @@ def p_map(function, *arrays, num_cpus=None):
         to each element of the given arrays in order.
     """
 
+    num_cpus = kwargs.get('num_cpus', None)
+
     new_data = list(p_imap(function, *arrays, num_cpus=num_cpus))
 
     return new_data
 
-def p_uimap(function, *arrays, num_cpus=None):
+def p_uimap(function, *arrays, **kwargs):
     """Returns an iterator for a parallel unordered map with a progress bar.
 
     Args:
@@ -83,6 +87,8 @@ def p_uimap(function, *arrays, num_cpus=None):
         may be in any order.
     """
 
+    num_cpus = kwargs.get('num_cpus', None)
+
     if num_cpus is None:
         num_cpus = cpu_count()
     elif type(num_cpus) == float:
@@ -93,7 +99,7 @@ def p_uimap(function, *arrays, num_cpus=None):
 
     return iterator
 
-def p_umap(function, *arrays, num_cpus=None):
+def p_umap(function, *arrays, **kwargs):
     """Performs a parallel unordered map with a progress bar.
 
     Example:
@@ -114,6 +120,8 @@ def p_umap(function, *arrays, num_cpus=None):
         to each element of the given arrays. This array
         may be in any order.
     """
+
+    num_cpus = kwargs.get('num_cpus', None)
 
     new_data = list(p_uimap(function, *arrays, num_cpus=num_cpus))
 
