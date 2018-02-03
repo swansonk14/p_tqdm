@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name = 'p_tqdm',
     packages = ['p_tqdm'],
-    version = '1.1',
+    version = '1.2',
     description = 'Parallel processing with progress bars',
     author = 'Kyle Swanson',
     author_email = 'swansonk.14@gmail.com',
