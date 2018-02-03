@@ -154,14 +154,14 @@ def _sequential(function, *arrays, **kwargs):
 def t_imap(function, *arrays, **kwargs):
     """Returns an iterator for a sequential map with a progress bar."""
 
-    iterator = sequential(function, *arrays, **kwargs)
+    iterator = _sequential(function, *arrays, **kwargs)
 
     return iterator
 
 def t_map(function, *arrays, **kwargs):
     """Performs a sequential map with a progress bar."""
 
-    iterator = sequential(function, *arrays, **kwargs)
-    result = list(iteratorZ)
+    iterator = _sequential(function, *arrays, **kwargs)
+    result = list(iterator)
 
     return result
