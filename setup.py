@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name = 'p_tqdm',
@@ -10,6 +10,8 @@ setup(
     url = 'https://github.com/swansonk14/p_tqdm',
     license = 'MIT',
     install_requires = ['tqdm', 'pathos'],
+    test_suite='nose.collector',
+    tests_require=['nose'],
     keywords = ['tqdm', 'progress bar', 'parallel'],
     classifiers = [],
 )
