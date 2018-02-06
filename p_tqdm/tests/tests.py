@@ -19,9 +19,9 @@ def _test_one_list(self):
 
     correct_array = [2, 3, 4]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_two_lists(self):
     array_1 = [1, 2, 3]
@@ -32,9 +32,9 @@ def _test_two_lists(self):
 
     correct_array = [11, 13, 15]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_two_lists_and_one_single(self):
     array_1 = [1, 2, 3]
@@ -46,9 +46,9 @@ def _test_two_lists_and_one_single(self):
 
     correct_array = [16, 18, 20]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_one_list_and_two_singles(self):
     array = [1, 2, 3]
@@ -60,9 +60,9 @@ def _test_one_list_and_two_singles(self):
 
     correct_array = [4, 5, 6]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_one_single(self):
     single = 5
@@ -72,9 +72,9 @@ def _test_one_single(self):
 
     correct_array = [6]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_one_single_with_num_iter(self):
     single = 5
@@ -85,9 +85,9 @@ def _test_one_single_with_num_iter(self):
 
     correct_array = [6]*num_iter
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_two_singles(self):
     single_1 = 5
@@ -98,9 +98,9 @@ def _test_two_singles(self):
 
     correct_array = [3]
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 def _test_two_singles_with_num_iter(self):
     single_1 = 5
@@ -112,9 +112,9 @@ def _test_two_singles_with_num_iter(self):
 
     correct_array = [3]*num_iter
     if self.ordered:
-        self.assertListEqual(correct_array, result)
+        self.assertEquals(correct_array, result)
     else:
-        self.assertListEqual(sorted(correct_array), sorted(result))
+        self.assertEquals(sorted(correct_array), sorted(result))
 
 class Testp_imap(unittest.TestCase):
     def __init__(self, *args, **kwargs):
