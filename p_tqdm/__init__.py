@@ -1,11 +1,11 @@
 """Map functions with tqdm progress bars for parallel and sequential processing.
 
-p_imap: Returns an iterator for a parallel ordered map.
 p_map: Performs a parallel ordered map.
-p_uimap: Returns an iterator for a parallel unordered map.
+p_imap: Returns an iterator for a parallel ordered map.
 p_umap: Performs a parallel unordered map.
-t_imap: Returns an iterator for a sequential map.
+p_uimap: Returns an iterator for a parallel unordered map.
 t_map: Performs a sequential map.
+t_imap: Returns an iterator for a sequential map.
 """
 
 from pathos.helpers import cpu_count
@@ -71,14 +71,6 @@ def _parallel(ordered, function, *arrays, **kwargs):
 
     return iterator
 
-def p_imap(function, *arrays, **kwargs):
-    """Returns an iterator for a parallel ordered map with a progress bar."""
-
-    ordered = True
-    iterator = _parallel(ordered, function, *arrays, **kwargs)
-
-    return iterator
-
 def p_map(function, *arrays, **kwargs):
     """Performs a parallel ordered map with a progress bar."""
 
@@ -88,10 +80,10 @@ def p_map(function, *arrays, **kwargs):
 
     return result
 
-def p_uimap(function, *arrays, **kwargs):
-    """Returns an iterator for a parallel unordered map with a progress bar."""
+def p_imap(function, *arrays, **kwargs):
+    """Returns an iterator for a parallel ordered map with a progress bar."""
 
-    ordered = False
+    ordered = True
     iterator = _parallel(ordered, function, *arrays, **kwargs)
 
     return iterator
@@ -104,6 +96,14 @@ def p_umap(function, *arrays, **kwargs):
     result = list(iterator)
 
     return result
+
+def p_uimap(function, *arrays, **kwargs):
+    """Returns an iterator for a parallel unordered map with a progress bar."""
+
+    ordered = False
+    iterator = _parallel(ordered, function, *arrays, **kwargs)
+
+    return iterator
 
 def _sequential(function, *arrays, **kwargs):
     """Returns an iterator for a sequential map with a progress bar.
@@ -151,13 +151,6 @@ def _sequential(function, *arrays, **kwargs):
 
     return iterator
 
-def t_imap(function, *arrays, **kwargs):
-    """Returns an iterator for a sequential map with a progress bar."""
-
-    iterator = _sequential(function, *arrays, **kwargs)
-
-    return iterator
-
 def t_map(function, *arrays, **kwargs):
     """Performs a sequential map with a progress bar."""
 
@@ -165,3 +158,10 @@ def t_map(function, *arrays, **kwargs):
     result = list(iterator)
 
     return result
+
+def t_imap(function, *arrays, **kwargs):
+    """Returns an iterator for a sequential map with a progress bar."""
+
+    iterator = _sequential(function, *arrays, **kwargs)
+
+    return iterator
