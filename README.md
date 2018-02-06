@@ -8,6 +8,8 @@
 
 ```pip install p_tqdm```
 
+`p_tqdm` works in both Python 2 and Python 3.
+
 ## Example
 
 Let's say you want to add two lists element by element. Without any parallelism, this can be done easily with a Python `map`.
@@ -23,7 +25,7 @@ added = map(add, l1, l2)
 # added == ['1a', '2b', '3c']
 ```
 
-If the lists are much larger or the computation is more intense, parallelism becomes a necessity. However, the syntax is often cumbersome. `p_tqdm` makes it easy and adds a progress bar too.
+But if the lists are much larger or the computation is more intense, parallelism becomes a necessity. However, the syntax is often cumbersome. `p_tqdm` makes it easy and adds a progress bar too.
 
 ```python
 from p_tqdm import p_map
@@ -112,7 +114,7 @@ for result in iterator:
     print(result) # prints '1a', '2b', '3c' in any order
 ```
 
-### t_map - sequential map
+### t_map
 
 Performs an ordered map sequentially.
 
@@ -126,7 +128,7 @@ added = t_map(add, ['1', '2', '3'], ['a', 'b', 'c'])
 # added == ['1a', '2b', '3c']
 ```
 
-### t_imap - iterator for sequential map
+### t_imap
 
 Returns an iterator for an ordered map to be performed sequentially.
 
