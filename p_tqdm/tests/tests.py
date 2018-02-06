@@ -1,8 +1,6 @@
-import types
 import unittest
 
 import p_tqdm
-import tqdm
 
 def add_1(a):
     return a + 1
