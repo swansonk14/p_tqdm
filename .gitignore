@@ -4,3 +4,4 @@ gifs
 .DS_Store
 p_tqdm.egg-info
 __pycache__
+*.pyc

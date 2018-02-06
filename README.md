@@ -1,22 +1,35 @@
-# p_tqdm - parallel processing with progress bars
+# p_tqdm
 
-`p_tqdm` provides implementations of parallel and sequential map functions using [tqdm](https://github.com/tqdm/tqdm) progress bars.
+`p_tqdm` makes parallel processing with progress bars easy.
 
-Since `p_tqdm` uses [pathos.multiprocessing](https://github.com/uqfoundation/pathos/blob/master/pathos/multiprocessing.py) instead of the regular python [multiprocessing](https://docs.python.org/3/library/multiprocessing.html) module, its parallel maps can apply almost any type of function, including lambda functions, nested functions, and class methods.
+`p_tqdm` is a wrapper around [pathos.multiprocessing](https://github.com/uqfoundation/pathos/blob/master/pathos/multiprocessing.py) and [tqdm](https://github.com/tqdm/tqdm). Unlike Python's default multiprocessing library, pathos provides a more flexible parallel map which can apply almost any type of function -- including lambda functions, nested functions, and class methods -- and can easily handle functions with multiple arguments. tqdm is applied on top of pathos's parallel map and displays a progress bar which includes an estimated time to completion.
 
 ## Installation
 
 ```pip install p_tqdm```
 
-## p_map - parallel ordered map
+## Example
+
+Let's say you want to add two lists element by element. Without any parallelism, this can be done easily with a Python `map`.
+
+```python
+l1 = ['1', '2', '3']
+l2 = ['a', 'b', 'c']
+
+def add(a, b):
+    return a + b
+    
+added = map(add, l1, l2)
+# added == ['1a', '2b', '3c']
+```
+
+If the lists are much larger or the computation is more intense, parallelism becomes a necessity. However, the syntax is often cumbersome. `p_tqdm` makes it easy and adds a progress bar too.
 
 ```python
 from p_tqdm import p_map
 
-def func(a, b):
-    return a + b
-
-results = p_map(func, ['1', '2', '3'], ['a', 'b', 'c'])
+added = p_map(add, l1, l2)
+# added == ['1a', '2b', '3c']
 ```
 
 ```
@@ -26,73 +39,126 @@ results = p_map(func, ['1', '2', '3'], ['a', 'b', 'c'])
 100%|████████████████████████████████████| 3/3 [00:03<00:00, 1.00s/it]
 ```
 
+## p_tqdm functions
+
+### Parallel maps
+
+* [`p_map`](#p_map) - parallel ordered map
+* [`p_imap`](#p_imap) - iterator for parallel ordered map
+* [`p_umap`](#p_umap) - parallel unordered map
+* [`p_uimap`](#p_uimap) - iterator for parallel unordered map
+
+### Sequential maps
+* [`t_map`](#t_map) - sequential ordered map
+* [`t_imap`](#t_imap) - iterator for sequential ordered map
+
+### Shared properties
+
+#### Arguments
+
+All `p_tqdm` functions accept any number of lists (of the same length) as input, as long as the number of lists matches the number of arguments of the function. Additionally, if any non-list variable is passed as an input to a `p_tqdm` function, the variable will be passed to all calls of the function. See the example below.
+
 ```python
-results == ['1a', '2b', '3c'] # True
+l1 = ['1', '2', '3']
+l2 = ['a', 'b', 'c']
+
+def add(a, b, c):
+    return a + b + c
+
+added = p_map(add, l1, l2, '!')
+# added == ['1a!', '2b!', '3c!']
 ```
 
-## p_imap - iterator for parallel ordered map
+#### CPUs
+
+All the parallel `p_tqdm` functions can be passed the keyword `num_cpus` to indicate how many CPUs to use. The default is all CPUs. `num_cpus` can either be an integer to indicate the exact number of CPUs to use or a float to indicate the proportion of CPUs to use.
+
+### p_map
+
+Performs an ordered map in parallel.
+
+```python
+from p_tqdm import p_map
+
+def add(a, b):
+    return a + b
+
+added = p_map(add, ['1', '2', '3'], ['a', 'b', 'c'])
+# added = ['1a', '2b', '3c']
+```
+
+### p_imap
+
+Returns an iterator for an ordered map in parallel.
 
 ```python
 from p_tqdm import p_imap
 
-def func(a, b):
+def add(a, b):
     return a + b
 
-iterator = p_imap(func, ['1', '2', '3'], ['a', 'b', 'c'])
+iterator = p_imap(add, ['1', '2', '3'], ['a', 'b', 'c'])
 
 for result in iterator:
     print(result) # prints '1a', '2b', '3c'
 ```
 
-## p_umap - parallel unordered map
+### p_umap
+
+Performs an unordered map in parallel.
 
 ```python
 from p_tqdm import p_umap
 
-def func(a, b):
+def add(a, b):
     return a + b
 
-results = p_umap(func, ['1', '2', '3'], ['a', 'b', 'c'])
-
-results == ['2b', '1a', '3c'] # an array with '1a', '2b', and '3c' in any order
+added = p_umap(add, ['1', '2', '3'], ['a', 'b', 'c'])
+# added is an array with '1a', '2b', '3c' in any order
 ```
 
-## p_uimap - iterator for parallel unordered map
+### p_uimap
+
+Returns an iterator for an unordered map in parallel.
 
 ```python
 from p_tqdm import p_uimap
 
-def func(a, b):
+def add(a, b):
     return a + b
 
-iterator = p_uimap(func, ['1', '2', '3'], ['a', 'b', 'c'])
+iterator = p_uimap(add, ['1', '2', '3'], ['a', 'b', 'c'])
 
 for result in iterator:
     print(result) # prints '1a', '2b', '3c' in any order
 ```
 
-## t_map - sequential map
+### t_map - sequential map
+
+Performs an ordered map sequentially.
 
 ```python
 from p_tqdm import t_map
 
-def func(a, b):
+def add(a, b):
     return a + b
 
-results = t_map(func, ['1', '2', '3'], ['a', 'b', 'c'])
+added = t_map(add, ['1', '2', '3'], ['a', 'b', 'c'])
 
-results == ['1a', '2b', '3c'] # True
+# added == ['1a', '2b', '3c']
 ```
 
-## t_imap - iterator for sequential map
+### t_imap - iterator for sequential map
+
+Returns an iterator for an ordered map to be performed sequentially.
 
 ```python
 from p_tqdm import p_imap
 
-def func(a, b):
+def add(a, b):
     return a + b
 
-iterator = t_imap(func, ['1', '2', '3'], ['a', 'b', 'c'])
+iterator = t_imap(add, ['1', '2', '3'], ['a', 'b', 'c'])
 
 for result in iterator:
     print(result) # prints '1a', '2b', '3c'
