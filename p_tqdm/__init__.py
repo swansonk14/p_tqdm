@@ -32,6 +32,8 @@ def _parallel(ordered, function, *arrays, **kwargs):
         num_iter(int): If only non-list variables are passed, the
             function will be performed num_iter times on
             these variables. Default: 1.
+        desc(str): a description for the task displayed in the
+            progress bar by tqdm.
 
     Returns:
         An iterator which will apply the function
@@ -45,6 +47,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
     # Extract kwargs
     num_cpus = kwargs.get('num_cpus', None)
     num_iter = kwargs.get('num_iter', 1)
+    desc = kwargs.get("desc", "")
 
     # Determine num_cpus
     if num_cpus is None:
@@ -67,7 +70,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
     # Create parallel iterator
     map_type = 'imap' if ordered else 'uimap'
     iterator = tqdm(getattr(Pool(num_cpus), map_type)(function, *arrays),
-                    total=num_iter)
+                    total=num_iter, desc=desc)
 
     return iterator
 
