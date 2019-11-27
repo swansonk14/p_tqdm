@@ -10,7 +10,7 @@ t_imap: Returns an iterator for a sequential map.
 
 from pathos.helpers import cpu_count
 from pathos.multiprocessing import ProcessingPool as Pool
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 def _parallel(ordered, function, *arrays, **kwargs):
     """Returns an iterator for a parallel map with a progress bar.
