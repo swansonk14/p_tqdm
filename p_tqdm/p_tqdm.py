@@ -8,19 +8,21 @@ t_map: Performs a sequential map.
 t_imap: Returns an iterator for a sequential map.
 """
 
+from typing import Any, Callable, Generator, Optional
+
 from pathos.helpers import cpu_count
 from pathos.multiprocessing import ProcessPool as Pool
 from tqdm.auto import tqdm
 
 
-def _parallel(ordered, function, *arrays, **kwargs):
-    """Returns an iterator for a parallel map with a progress bar.
+def _parallel(ordered: bool, function: Callable, *arrays: list, **kwargs: Any) -> Generator:
+    """Returns a generator for a parallel map with a progress bar.
 
     Arguments:
         ordered(bool): True for an ordered map, false for an unordered map.
-        function(function): The function to apply to each element
+        function(Callable): The function to apply to each element
             of the given arrays.
-        arrays(tuple): One or more arrays of the same length
+        arrays(Tuple[list]): One or more arrays of the same length
             containing the data to be mapped. If a non-list
             variable is passed, it will be repeated a number
             of times equal to the lengths of the list(s). If only
@@ -35,7 +37,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
             these variables. Default: 1.
 
     Returns:
-        An iterator which will apply the function
+        A generator which will apply the function
         to each element of the given arrays in
         parallel in order with a progress bar.
     """
@@ -44,8 +46,8 @@ def _parallel(ordered, function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_cpus = kwargs.pop('num_cpus', None)
-    num_iter = kwargs.pop('num_iter', 1)
+    num_cpus: Optional[int] = kwargs.pop('num_cpus', None)
+    num_iter: int = kwargs.pop('num_iter', 1)
 
     # Determine num_cpus
     if num_cpus is None:
@@ -65,7 +67,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
         else:
             assert len(array) == num_iter
 
-    # Create parallel iterator
+    # Create parallel generator
     map_type = 'imap' if ordered else 'uimap'
     pool = Pool(num_cpus)
     map_func = getattr(pool, map_type)
@@ -76,7 +78,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
     pool.clear()
 
 
-def p_map(function, *arrays, **kwargs):
+def p_map(function: Callable, *arrays: list, **kwargs: Any) -> list:
     """Performs a parallel ordered map with a progress bar."""
 
     ordered = True
@@ -86,7 +88,7 @@ def p_map(function, *arrays, **kwargs):
     return result
 
 
-def p_imap(function, *arrays, **kwargs):
+def p_imap(function: Callable, *arrays: list, **kwargs: Any) -> Generator:
     """Returns an iterator for a parallel ordered map with a progress bar."""
 
     ordered = True
@@ -95,7 +97,7 @@ def p_imap(function, *arrays, **kwargs):
     return iterator
 
 
-def p_umap(function, *arrays, **kwargs):
+def p_umap(function: Callable, *arrays: list, **kwargs: Any) -> list:
     """Performs a parallel unordered map with a progress bar."""
 
     ordered = False
@@ -105,7 +107,7 @@ def p_umap(function, *arrays, **kwargs):
     return result
 
 
-def p_uimap(function, *arrays, **kwargs):
+def p_uimap(function: Callable, *arrays: list, **kwargs: Any) -> Generator:
     """Returns an iterator for a parallel unordered map with a progress bar."""
 
     ordered = False
@@ -114,13 +116,13 @@ def p_uimap(function, *arrays, **kwargs):
     return iterator
 
 
-def _sequential(function, *arrays, **kwargs):
-    """Returns an iterator for a sequential map with a progress bar.
+def _sequential(function: Callable, *arrays: list, **kwargs: Any) -> Generator:
+    """Returns a generator for a sequential map with a progress bar.
 
     Arguments:
-        function(function): The function to apply to each element
+        function(Callable): The function to apply to each element
             of the given arrays.
-        arrays(tuple): One or more arrays of the same length
+        arrays(Tuple[list]): One or more arrays of the same length
             containing the data to be mapped. If a non-list
             variable is passed, it will be repeated a number
             of times equal to the lengths of the list(s). If only
@@ -131,7 +133,7 @@ def _sequential(function, *arrays, **kwargs):
             these variables. Default: 1.
 
     Returns:
-        An iterator which will apply the function
+        A generator which will apply the function
         to each element of the given arrays sequentially
         in order with a progress bar.
     """
@@ -140,7 +142,7 @@ def _sequential(function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_iter = kwargs.pop('num_iter', 1)
+    num_iter: int = kwargs.pop('num_iter', 1)
 
     # Determine num_iter when at least one list is present
     if any([type(array) == list for array in arrays]):
@@ -154,13 +156,12 @@ def _sequential(function, *arrays, **kwargs):
         else:
             assert len(array) == num_iter
 
-    # Create parallel iterator
-    iterator = tqdm(map(function, *arrays), total=num_iter, **kwargs)
+    # Create sequential generator
+    for item in tqdm(map(function, *arrays), total=num_iter, **kwargs):
+        yield item
 
-    return iterator
 
-
-def t_map(function, *arrays, **kwargs):
+def t_map(function: Callable, *arrays: list, **kwargs: Any) -> list:
     """Performs a sequential map with a progress bar."""
 
     iterator = _sequential(function, *arrays, **kwargs)
@@ -169,7 +170,7 @@ def t_map(function, *arrays, **kwargs):
     return result
 
 
-def t_imap(function, *arrays, **kwargs):
+def t_imap(function: Callable, *arrays: list, **kwargs: Any) -> Generator:
     """Returns an iterator for a sequential map with a progress bar."""
 
     iterator = _sequential(function, *arrays, **kwargs)
