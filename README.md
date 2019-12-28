@@ -1,5 +1,7 @@
 # p_tqdm
 
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/p_tqdm)](https://badge.fury.io/py/p_tqdm)
+[![PyPI version](https://badge.fury.io/py/p_tqdm.svg)](https://badge.fury.io/py/p_tqdm)
 [![Build Status](https://travis-ci.org/swansonk14/p_tqdm.svg?branch=master)](https://travis-ci.org/swansonk14/p_tqdm)
 
 `p_tqdm` makes parallel processing with progress bars easy.
@@ -9,8 +11,6 @@
 ## Installation
 
 ```pip install p_tqdm```
-
-`p_tqdm` works with Python versions 2.7, 3.4, 3.5, 3.6.
 
 ## Example
 
