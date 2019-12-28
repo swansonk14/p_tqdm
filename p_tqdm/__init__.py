@@ -43,8 +43,8 @@ def _parallel(ordered, function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_cpus = kwargs.get('num_cpus', None)
-    num_iter = kwargs.get('num_iter', 1)
+    num_cpus = kwargs.pop('num_cpus', None)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_cpus
     if num_cpus is None:
@@ -67,7 +67,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
     # Create parallel iterator
     map_type = 'imap' if ordered else 'uimap'
     iterator = tqdm(getattr(Pool(num_cpus), map_type)(function, *arrays),
-                    total=num_iter)
+                    total=num_iter, **kwargs)
 
     return iterator
 
@@ -131,7 +131,7 @@ def _sequential(function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_iter = kwargs.get('num_iter', 1)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_iter when at least one list is present
     if any([type(array) == list for array in arrays]):
@@ -147,7 +147,7 @@ def _sequential(function, *arrays, **kwargs):
 
     # Create parallel iterator
     iterator = tqdm(map(function, *arrays),
-                    total=num_iter)
+                    total=num_iter, **kwargs)
 
     return iterator
 

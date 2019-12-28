@@ -11,9 +11,9 @@ def add_2(a, b):
 def add_3(a, b, c):
     return a + b + c
 
-def _test_one_list(self):
+def _test_one_list(self, **kwargs):
     array = [1, 2, 3]
-    result = self.func(add_1, array)
+    result = self.func(add_1, array, **kwargs)
     if self.generator:
         result = list(result)
 
@@ -301,6 +301,12 @@ class Testt_map(unittest.TestCase):
 
     def test_two_singles_with_num_iter(self):
         _test_two_singles_with_num_iter(self)
+
+    def test_dynamic_ncols(self):
+        _test_one_list(self, dynamic_ncols=True)
+
+    def test_fixed_ncols(self):
+        _test_one_list(self, ncols=80)
 
 if __name__ == '__main__':
     unittest.main()
