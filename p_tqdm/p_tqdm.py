@@ -8,7 +8,7 @@ t_map: Performs a sequential map.
 t_imap: Returns an iterator for a sequential map.
 """
 
-from typing import Any, Callable, Generator, Optional
+from typing import Any, Callable, Generator
 
 from pathos.helpers import cpu_count
 from pathos.multiprocessing import ProcessPool as Pool
@@ -46,8 +46,8 @@ def _parallel(ordered: bool, function: Callable, *arrays: list, **kwargs: Any) -
     arrays = list(arrays)
 
     # Extract kwargs
-    num_cpus: Optional[int] = kwargs.pop('num_cpus', None)
-    num_iter: int = kwargs.pop('num_iter', 1)
+    num_cpus = kwargs.pop('num_cpus', None)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_cpus
     if num_cpus is None:
@@ -142,7 +142,7 @@ def _sequential(function: Callable, *arrays: list, **kwargs: Any) -> Generator:
     arrays = list(arrays)
 
     # Extract kwargs
-    num_iter: int = kwargs.pop('num_iter', 1)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_iter when at least one list is present
     if any([type(array) == list for array in arrays]):
