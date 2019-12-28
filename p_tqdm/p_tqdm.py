@@ -10,7 +10,7 @@ t_imap: Returns an iterator for a sequential map.
 
 from pathos.helpers import cpu_count
 from pathos.multiprocessing import ProcessPool as Pool
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 
 def _parallel(ordered, function, *arrays, **kwargs):
@@ -44,8 +44,8 @@ def _parallel(ordered, function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_cpus = kwargs.get('num_cpus', None)
-    num_iter = kwargs.get('num_iter', 1)
+    num_cpus = kwargs.pop('num_cpus', None)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_cpus
     if num_cpus is None:
@@ -70,7 +70,7 @@ def _parallel(ordered, function, *arrays, **kwargs):
     pool = Pool(num_cpus)
     map_func = getattr(pool, map_type)
 
-    for item in tqdm(map_func(function, *arrays), total=num_iter):
+    for item in tqdm(map_func(function, *arrays), total=num_iter, **kwargs):
         yield item
 
     pool.clear()
@@ -140,7 +140,7 @@ def _sequential(function, *arrays, **kwargs):
     arrays = list(arrays)
 
     # Extract kwargs
-    num_iter = kwargs.get('num_iter', 1)
+    num_iter = kwargs.pop('num_iter', 1)
 
     # Determine num_iter when at least one list is present
     if any([type(array) == list for array in arrays]):
@@ -155,8 +155,7 @@ def _sequential(function, *arrays, **kwargs):
             assert len(array) == num_iter
 
     # Create parallel iterator
-    iterator = tqdm(map(function, *arrays),
-                    total=num_iter)
+    iterator = tqdm(map(function, *arrays), total=num_iter, **kwargs)
 
     return iterator
 
