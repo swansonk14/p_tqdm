@@ -1,7 +1,7 @@
 # p_tqdm
 
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/p_tqdm)](https://badge.fury.io/py/p_tqdm)
-[![PyPI version](https://badge.fury.io/py/p_tqdm.svg)](https://badge.fury.io/py/p_tqdm)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/p-tqdm)](https://badge.fury.io/py/p-tqdm)
+[![PyPI version](https://badge.fury.io/py/p-tqdm.svg)](https://badge.fury.io/py/p-tqdm)
 [![Build Status](https://travis-ci.org/swansonk14/p_tqdm.svg?branch=master)](https://travis-ci.org/swansonk14/p_tqdm)
 
 `p_tqdm` makes parallel processing with progress bars easy.
