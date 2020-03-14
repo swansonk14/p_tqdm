@@ -1,18 +1,18 @@
 from setuptools import find_packages, setup
 
-with open('README.md') as f:
+with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='p_tqdm',
-    version='1.3',
+    version='1.3.1',
     author='Kyle Swanson',
     author_email='swansonk.14@gmail.com',
     description='Parallel processing with progress bars',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/swansonk14/p_tqdm',
-    download_url='https://github.com/swansonk14/p_tqdm/v_1.3.tar.gz',
+    download_url='https://github.com/swansonk14/p_tqdm/v_1.3.1.tar.gz',
     license='MIT',
     packages=find_packages(),
     install_requires=[
