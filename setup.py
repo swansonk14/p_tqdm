@@ -5,19 +5,20 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='p_tqdm',
-    version='1.3.1',
+    version='1.3.2',
     author='Kyle Swanson',
     author_email='swansonk.14@gmail.com',
     description='Parallel processing with progress bars',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/swansonk14/p_tqdm',
-    download_url='https://github.com/swansonk14/p_tqdm/v_1.3.1.tar.gz',
+    download_url='https://github.com/swansonk14/p_tqdm/v_1.3.2.tar.gz',
     license='MIT',
     packages=find_packages(),
     install_requires=[
         'tqdm',
-        'pathos'
+        'pathos',
+        'six'
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
