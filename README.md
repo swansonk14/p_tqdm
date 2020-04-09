@@ -150,19 +150,25 @@ for result in iterator:
 
 ### Arguments
 
-All `p_tqdm` functions accept any number of lists (of the same length) as input, as long as the number of lists matches the number of arguments of the function. Additionally, if any non-list variable is passed as an input to a `p_tqdm` function, the variable will be passed to all calls of the function. See the example below.
+All `p_tqdm` functions accept any number of iterables as input, as long as the number of iterables matches the number of arguments of the function.
+
+To repeat a non-iterable argument along with the iterables, use Python's [partial](https://docs.python.org/3/library/functools.html#functools.partial) from the [functools](https://docs.python.org/3/library/functools.html) library. See the example below.
 
 ```python
+from functools import partial
+
 l1 = ['1', '2', '3']
 l2 = ['a', 'b', 'c']
 
-def add(a, b, c):
+def add(a, b, c=''):
     return a + b + c
 
-added = p_map(add, l1, l2, '!')
+added = p_map(partial(add, c='!'), l1, l2)
 # added == ['1a!', '2b!', '3c!']
 ```
 
 ### CPUs
 
 All the parallel `p_tqdm` functions can be passed the keyword `num_cpus` to indicate how many CPUs to use. The default is all CPUs. `num_cpus` can either be an integer to indicate the exact number of CPUs to use or a float to indicate the proportion of CPUs to use.
+
+Note that the parallel Pool objects used by `p_tqdm` are automatically closed when the map finishes processing.

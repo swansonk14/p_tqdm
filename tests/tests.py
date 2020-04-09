@@ -1,4 +1,5 @@
 import unittest
+from functools import partial
 
 from p_tqdm import p_map, p_imap, p_umap, p_uimap, t_map, t_imap
 
@@ -11,8 +12,8 @@ def add_2(a, b):
     return a + b
 
 
-def add_3(a, b, c):
-    return a + b + c
+def add_3(a, b, c=0):
+    return a + 2 * b + 3 * c
 
 
 class Test_p_map(unittest.TestCase):
@@ -51,11 +52,11 @@ class Test_p_map(unittest.TestCase):
         array_1 = [1, 2, 3]
         array_2 = [10, 11, 12]
         single = 5
-        result = self.func(add_3, array_1, single, array_2)
+        result = self.func(partial(add_3, single), array_1, array_2)
         if self.generator:
             result = list(result)
 
-        correct_array = [16, 18, 20]
+        correct_array = [37, 42, 47]
         if self.ordered:
             self.assertEqual(correct_array, result)
         else:
@@ -65,63 +66,39 @@ class Test_p_map(unittest.TestCase):
         array = [1, 2, 3]
         single_1 = 5
         single_2 = -2
-        result = self.func(add_3, single_1, array, single_2)
+        result = self.func(partial(add_3, single_1, c=single_2), array)
         if self.generator:
             result = list(result)
 
-        correct_array = [4, 5, 6]
+        correct_array = [1, 3, 5]
         if self.ordered:
             self.assertEqual(correct_array, result)
         else:
             self.assertEqual(sorted(correct_array), sorted(result))
 
-    def test_one_single(self):
-        single = 5
-        result = self.func(add_1, single)
+    def test_list_and_generator_and_single_equal_length(self):
+        array = [1, 2, 3]
+        generator = range(3)
+        single = -3
+        result = self.func(partial(add_3, c=single), array, generator)
         if self.generator:
             result = list(result)
 
-        correct_array = [6]
+        correct_array = [-8, -5, -2]
         if self.ordered:
             self.assertEqual(correct_array, result)
         else:
             self.assertEqual(sorted(correct_array), sorted(result))
 
-    def test_one_single_with_num_iter(self):
-        single = 5
-        num_iter = 3
-        result = self.func(add_1, single, num_iter=num_iter)
+    def test_list_and_generator_and_single_unequal_length(self):
+        array = [1, 2, 3, 4, 5, 6]
+        generator = range(3)
+        single = -3
+        result = self.func(partial(add_3, c=single), array, generator)
         if self.generator:
             result = list(result)
 
-        correct_array = [6] * num_iter
-        if self.ordered:
-            self.assertEqual(correct_array, result)
-        else:
-            self.assertEqual(sorted(correct_array), sorted(result))
-
-    def test_two_singles(self):
-        single_1 = 5
-        single_2 = -2
-        result = self.func(add_2, single_1, single_2)
-        if self.generator:
-            result = list(result)
-
-        correct_array = [3]
-        if self.ordered:
-            self.assertEqual(correct_array, result)
-        else:
-            self.assertEqual(sorted(correct_array), sorted(result))
-
-    def test_two_singles_with_num_iter(self):
-        single_1 = 5
-        single_2 = -2
-        num_iter = 3
-        result = self.func(add_2, single_1, single_2, num_iter=num_iter)
-        if self.generator:
-            result = list(result)
-
-        correct_array = [3] * num_iter
+        correct_array = [-8, -5, -2]
         if self.ordered:
             self.assertEqual(correct_array, result)
         else:
