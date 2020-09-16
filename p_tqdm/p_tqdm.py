@@ -39,8 +39,8 @@ def _parallel(ordered: bool, function: Callable, *iterables: Iterable, **kwargs:
         num_cpus = int(round(num_cpus * cpu_count()))
 
     # Determine length of tqdm (equal to length of shortest iterable), if possible
-    sized_iterable_lengths = [len(iterable) for iterable in iterables if isinstance(iterable, Sized)]
-    length = min(sized_iterable_lengths) if sized_iterable_lengths else None
+    lengths = [len(iterable) for iterable in iterables if isinstance(iterable, Sized)]
+    length = min(lengths) if lengths else None
 
     # Create parallel generator
     map_type = 'imap' if ordered else 'uimap'
