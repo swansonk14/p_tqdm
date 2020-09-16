@@ -38,8 +38,9 @@ def _parallel(ordered: bool, function: Callable, *iterables: Iterable, **kwargs:
     elif type(num_cpus) == float:
         num_cpus = int(round(num_cpus * cpu_count()))
 
-    # Determine length of tqdm (equal to length of shortest iterable)
-    length = min(len(iterable) for iterable in iterables if isinstance(iterable, Sized))
+    # Determine length of tqdm (equal to length of shortest iterable), if possible
+    sized_iterable_lengths = [len(iterable) for iterable in iterables if isinstance(iterable, Sized)]
+    length = min(sized_iterable_lengths) if sized_iterable_lengths else None
 
     # Create parallel generator
     map_type = 'imap' if ordered else 'uimap'
