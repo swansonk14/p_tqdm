@@ -46,8 +46,7 @@ def _parallel(ordered: bool, function: Callable, *iterables: Iterable, **kwargs:
     pool = Pool(num_cpus)
     map_func = getattr(pool, map_type)
 
-    for item in tqdm(map_func(function, *iterables), total=length, **kwargs):
-        yield item
+    yield from tqdm(map_func(function, *iterables), total=length, **kwargs)
 
     pool.clear()
 
@@ -106,8 +105,7 @@ def _sequential(function: Callable, *iterables: Iterable, **kwargs: Any) -> Gene
     length = min(len(iterable) for iterable in iterables if isinstance(iterable, Sized))
 
     # Create sequential generator
-    for item in tqdm(map(function, *iterables), total=length, **kwargs):
-        yield item
+    yield from tqdm(map(function, *iterables), total=length, **kwargs)
 
 
 def t_map(function: Callable, *iterables: Iterable, **kwargs: Any) -> List[Any]:

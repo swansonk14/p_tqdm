@@ -18,7 +18,7 @@ def add_3(a, b, c=0):
 
 class Test_p_map(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(Test_p_map, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.func = p_map
         self.generator = False
         self.ordered = True
