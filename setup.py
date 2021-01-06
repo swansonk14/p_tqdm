@@ -21,6 +21,7 @@ setup(
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
+    python_requires='>=3.6',
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
