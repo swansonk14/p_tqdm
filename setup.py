@@ -18,7 +18,6 @@ setup(
     install_requires=[
         'tqdm',
         'pathos',
-        'six'
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
