@@ -5,3 +5,4 @@ gifs
 p_tqdm.egg-info
 __pycache__
 *.pyc
+.idea
