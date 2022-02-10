@@ -8,7 +8,7 @@ t_map: Performs a sequential map.
 t_imap: Returns an iterator for a sequential map.
 """
 
-from collections import Sized
+from collections.abc import Sized
 from typing import Any, Callable, Generator, Iterable, List
 
 from pathos.helpers import cpu_count
