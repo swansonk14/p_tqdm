@@ -8,7 +8,7 @@ t_map: Performs a sequential map.
 t_imap: Returns an iterator for a sequential map.
 """
 
-from collections import Sized
+from collections.abc import Sized
 from typing import Any, Callable, Generator, Iterable, List
 
 from pathos.helpers import cpu_count
@@ -38,9 +38,10 @@ def _parallel(ordered: bool, function: Callable, *iterables: Iterable, **kwargs:
     elif type(num_cpus) == float:
         num_cpus = int(round(num_cpus * cpu_count()))
 
-    # Determine length of tqdm (equal to length of shortest iterable), if possible
+    # Determine length of tqdm (equal to length of shortest iterable or total kwarg), if possible
+    total = kwargs.pop('total', None)
     lengths = [len(iterable) for iterable in iterables if isinstance(iterable, Sized)]
-    length = min(lengths) if lengths else None
+    length = total or (min(lengths) if lengths else None)
 
     # Create parallel generator
     map_type = 'imap' if ordered else 'uimap'
