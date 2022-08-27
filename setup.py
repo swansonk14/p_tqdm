@@ -1,11 +1,22 @@
+from pathlib import Path
 from setuptools import find_packages, setup
+
+# Load version number
+__version__ = None
+
+src_dir = Path(__file__).parent.absolute()
+version_file = src_dir / 'p_tqdm' / '_version.py'
+
+# Long README
+with open(version_file) as fd:
+    exec(fd.read())
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='p_tqdm',
-    version='1.3.3',
+    version='1.4.0',
     author='Kyle Swanson',
     author_email='swansonk.14@gmail.com',
     description='Parallel processing with progress bars',
@@ -20,8 +31,7 @@ setup(
         'pathos>=0.2.5',
         'six>=1.13.0'
     ],
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    tests_require=['pytest'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
