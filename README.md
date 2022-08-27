@@ -2,7 +2,10 @@
 
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/p-tqdm)](https://badge.fury.io/py/p-tqdm)
 [![PyPI version](https://badge.fury.io/py/p-tqdm.svg)](https://badge.fury.io/py/p-tqdm)
-[![Build Status](https://travis-ci.org/swansonk14/p_tqdm.svg?branch=master)](https://travis-ci.org/swansonk14/p_tqdm)
+[![Downloads](https://pepy.tech/badge/p_tqdm)](https://pepy.tech/project/p_tqdm)
+[![Build Status](https://github.com/swansonk14/p_tqdm/workflows/tests/badge.svg)](https://github.com/swansonk14/p_tqdm)
+[![codecov](https://codecov.io/gh/swansonk14/p_tqdm/branch/main/graph/badge.svg)](https://codecov.io/gh/swansonk14/p_tqdm)
+[![license](https://img.shields.io/github/license/swansonk14/p_tqdm.svg)](https://github.com/swansonk14/p_tqdm/blob/main/LICENSE.txt)
 
 `p_tqdm` makes parallel processing with progress bars easy.
 
