@@ -9,7 +9,7 @@
 
 `p_tqdm` makes parallel processing with progress bars easy.
 
-`p_tqdm` is a wrapper around [pathos.multiprocessing](https://github.com/uqfoundation/pathos/blob/master/pathos/multiprocessing.py) and [tqdm](https://github.com/tqdm/tqdm). Unlike Python's default multiprocessing library, pathos provides a more flexible parallel map which can apply almost any type of function --- including lambda functions, nested functions, and class methods --- and can easily handle functions with multiple arguments. tqdm is applied on top of pathos's parallel map and displays a progress bar including an estimated time to completion.
+`p_tqdm` is a wrapper around [pathos.multiprocessing](https://github.com/uqfoundation/pathos/blob/master/pathos/multiprocessing.py) and [tqdm](https://github.com/tqdm/tqdm). Unlike Python's default multiprocessing library, pathos provides a more flexible parallel map which can apply almost any type of function, including lambda functions, nested functions, and class methods, and can easily handle functions with multiple arguments. tqdm is applied on top of pathos's parallel map and displays a progress bar including an estimated time to completion.
 
 ## Installation
 
