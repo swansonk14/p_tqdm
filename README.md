@@ -172,3 +172,7 @@ added = p_map(partial(add, c='!'), l1, l2)
 All the parallel `p_tqdm` functions can be passed the keyword `num_cpus` to indicate how many CPUs to use. The default is all CPUs. `num_cpus` can either be an integer to indicate the exact number of CPUs to use or a float to indicate the proportion of CPUs to use.
 
 Note that the parallel Pool objects used by `p_tqdm` are automatically closed when the map finishes processing.
+
+### tqdm instance
+
+All the parallel `p_tqdm` functions can be passed the keyword `tqdm` to choose a specific flavor of tqdm. By default, this value is taken from `tqdm.auto`. The `tqdm` parameter can be used pass `p_tqdm` output to `tqdm.gui`, `tqdm.tk` or any customized subclass of `tqdm`.
