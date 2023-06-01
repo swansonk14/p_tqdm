@@ -45,12 +45,12 @@ def _parallel(ordered: bool, function: Callable, *iterables: Iterable, **kwargs:
 
     # Create parallel generator
     map_type = 'imap' if ordered else 'uimap'
+
+    # Choose tqdm variant
+    tqdm_func = kwargs.pop('tqdm', tqdm)
     
     with Pool(num_cpus) as pool:
         map_func = getattr(pool, map_type)
-
-        # Choose tqdm variant
-        tqdm_func = kwargs.pop('tqdm', tqdm)
 
         for item in tqdm_func(map_func(function, *iterables), total=length, **kwargs):
             yield item
