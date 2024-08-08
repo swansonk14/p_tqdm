@@ -1,8 +1,9 @@
 from pathlib import Path
 from setuptools import find_packages, setup
+from typing import Optional
 
 # Load version number
-__version__: str | None = None
+__version__: Optional[str] = None
 
 src_dir = Path(__file__).parent.absolute()
 version_file = src_dir / 'p_tqdm' / '_version.py'
